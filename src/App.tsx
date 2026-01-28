@@ -7,5 +7,4 @@ function App() {
     </>
   );
 }
-// sdsds
 export default App;

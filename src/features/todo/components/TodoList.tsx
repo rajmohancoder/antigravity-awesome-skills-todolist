@@ -1,12 +1,35 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useTodos } from '../hooks/useTodos';
 import { TodoInput } from './TodoInput';
 import { TodoItem } from './TodoItem';
 import { ConfirmModal } from '@/components/ConfirmModal';
 
+const QUOTES = [
+    "Time is more powerful than wealth. Use it wisely.",
+    "The two most powerful warriors are patience and time.",
+    "Time is what we want most, but what we use worst.",
+    "Lost time is never found again.",
+    "Your time is limited, so don't waste it living someone else's life.",
+    "The key is in not spending time, but in investing it."
+];
+
 export const TodoList: React.FC = () => {
     const { todos, removedTodos, addTodo, removeTodo, restoreTodo, deleteForever, clearAllRemoved, updateTodo, togglePriority } = useTodos();
     const [showClearAllModal, setShowClearAllModal] = useState(false);
+    const [quoteIndex, setQuoteIndex] = useState(0);
+    const [isExiting, setIsExiting] = useState(false);
+
+    useEffect(() => {
+        const interval = setInterval(() => {
+            setIsExiting(true);
+            setTimeout(() => {
+                setQuoteIndex((prev) => (prev + 1) % QUOTES.length);
+                setIsExiting(false);
+            }, 500); // Wait for fade out animation
+        }, 5000);
+
+        return () => clearInterval(interval);
+    }, []);
 
     const handleClearAll = () => {
         clearAllRemoved();
@@ -49,9 +72,20 @@ export const TodoList: React.FC = () => {
                     focus today
                 </h1>
 
-                <p style={{ color: 'var(--text-secondary)', marginBottom: '32px' }}>
-                    Time is more powerful than wealth. Use it wisely.
-                </p>
+                <div style={{ height: '24px', marginBottom: '32px' }}>
+                    <p
+                        style={{
+                            color: 'var(--text-secondary)',
+                            margin: 0,
+                            transition: 'all 0.5s ease-in-out',
+                            opacity: isExiting ? 0 : 0.8,
+                            transform: isExiting ? 'translateY(-10px)' : 'translateY(0)',
+                            fontStyle: 'italic',
+                        }}
+                    >
+                        {QUOTES[quoteIndex]}
+                    </p>
+                </div>
 
                 <TodoInput onAdd={addTodo} />
 
