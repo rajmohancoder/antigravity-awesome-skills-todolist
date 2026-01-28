@@ -216,7 +216,7 @@ export const TodoItem: React.FC<TodoItemProps> = ({ todo, onRemove, onDeleteFore
                         </button>
                     </Tooltip>
 
-                    {variant === 'removed' && (
+                    {variant === 'removed' && onDeleteForever && (
                         <Tooltip content="Delete forever">
                             <button
                                 onClick={handleDeleteForever}

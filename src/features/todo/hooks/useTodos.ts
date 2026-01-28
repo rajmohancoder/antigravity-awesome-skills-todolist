@@ -52,6 +52,11 @@ export const useTodos = () => {
         }
     }, [todos]);
 
+    const removeAllTodos = useCallback(() => {
+        setRemovedTodos((prev) => [...todos, ...prev]);
+        setTodos([]);
+    }, [todos]);
+
     const restoreTodo = useCallback((id: string) => {
         const todoToRestore = removedTodos.find((t) => t.id === id);
         if (todoToRestore) {
@@ -67,6 +72,11 @@ export const useTodos = () => {
     const clearAllRemoved = useCallback(() => {
         setRemovedTodos([]);
     }, []);
+
+    const restoreAllRemoved = useCallback(() => {
+        setTodos((prev) => [...removedTodos, ...prev]);
+        setRemovedTodos([]);
+    }, [removedTodos]);
 
     const updateTodo = useCallback((id: string, newText: string) => {
         setTodos((prev) => prev.map((todo) =>
@@ -95,9 +105,11 @@ export const useTodos = () => {
         removedTodos,
         addTodo,
         removeTodo,
+        removeAllTodos,
         restoreTodo,
         deleteForever,
         clearAllRemoved,
+        restoreAllRemoved,
         updateTodo,
         togglePriority,
     };
