@@ -69,7 +69,7 @@ export const TodoList: React.FC = () => {
                         WebkitTextFillColor: 'transparent',
                     }}
                 >
-                    focus today
+                    Daily focus
                 </h1>
 
                 <div style={{ height: '24px', marginBottom: '32px' }}>
